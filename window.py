@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import time
+from card import Cards
 
 class Window:
     def __init__(self):
@@ -28,7 +29,7 @@ class Window:
 
         for pt in zip(*locations[::-1]):
             print("Card detected at: ", pt)
-            cv2.rectangle(self.card_frame, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 10)
+            #cv2.rectangle(self.card_frame, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 10)
             cv2.rectangle(self.frame, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 10)
             cv2.imwrite('cards/new_card.jpg', self.card_frame)
             self.detected_card = True
@@ -46,7 +47,10 @@ class Window:
 
 
             if self.detected_card:
-                cv2.imshow('Magic Card Detector', self.card_frame)
+                cv2.destroyAllWindows()
+                Cards(self.card_frame).inspect_card()
+                
+                break
             else:
                 cv2.imshow('Magic Card Detector', self.frame)
                 gray_frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
