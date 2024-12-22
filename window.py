@@ -26,13 +26,13 @@ class Window:
         result = cv2.matchTemplate(frame, template, cv2.TM_CCOEFF_NORMED)
         threshold = 0.35
         locations = np.where(result >= threshold)
-
+        self.detected_card = True
         for pt in zip(*locations[::-1]):
-            print("Card detected at: ", pt)
+            #print("Card detected at: ", pt)
             #cv2.rectangle(self.card_frame, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 10)
             cv2.rectangle(self.frame, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 10)
             cv2.imwrite('cards/new_card.jpg', self.card_frame)
-            self.detected_card = True
+
 
     def run(self):
         frame_rate = 30  # Set the frame rate (frames per second)
